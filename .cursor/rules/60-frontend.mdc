@@ -1,0 +1,18 @@
+---
+description: Convenciones del frontend React (apps/web)
+globs: apps/web/**
+alwaysApply: false
+---
+
+# Frontend (apps/web)
+
+- La UI no autoriza: el backend decide. Las rutas protegidas solo mejoran UX.
+- Sesión por cookie `httpOnly`: no guardes tokens en `localStorage`/`sessionStorage` ni los leas desde JS. Usa `credentials: 'include'` (mismo origen).
+- Nunca envíes `userId`, `email` de dueño ni `role` para identificar al usuario; el backend usa el token.
+- Solo variables `VITE_*` públicas; ningún secreto en el código del cliente.
+- Validación en el cliente para UX, espejo de las reglas del backend; muestra errores del servidor (400) por campo.
+- Toda pantalla con datos maneja estados: carga, error comprensible, vacío ("aún no tienes accidentes") y confirmación.
+- Formulario de accidente precargado con los datos del perfil del titular.
+- Tablero admin: acordeones por usuario y botones de transición válidos según estado; sin drag & drop.
+- Accesibilidad básica: labels asociados, foco en errores, botones con texto.
+- Cliente HTTP centralizado (un módulo `api/`); componentes sin `fetch` dispersos.

@@ -1,0 +1,29 @@
+---
+description: Reglas de dependencia de la arquitectura hexagonal del backend
+globs: apps/api/**
+alwaysApply: false
+---
+
+# Arquitectura hexagonal (apps/api)
+
+- `src/domain/`: TypeScript puro. Sin imports de `node_modules` (ni Zod, ni Fastify, ni pg) ni de otras capas.
+- `src/application/`: casos de uso + `ports/`. Importa solo `domain/`. Sin `process.env`, sin librerías de infraestructura.
+- `src/infrastructure/`: adaptadores (`http/`, `persistence/postgres/`, `security/`, `config/`) que implementan ports.
+- `src/main.ts`: composition root; único lugar que instancia y cablea adaptadores.
+- Zod solo en el borde (`infrastructure/http`, `infrastructure/config`).
+- Controladores: parsear → identidad verificada → caso de uso → mapear error a HTTP. Nada de reglas de negocio.
+- Errores: el dominio lanza errores tipados propios; `http/` los traduce a códigos HTTP sin filtrar detalles internos.
+- SQL parametrizado siempre (`$1`, `$2`); nunca concatenes entrada del usuario.
+- Verifica con `npm run arch:check`. Nunca relajes `.dependency-cruiser.cjs` para que pase.
+
+```ts
+// ✅ application importa domain y su port
+import { AccidentStatus } from '../../domain/accident/accident-status';
+import type { AccidentRepository } from '../ports/accident-repository';
+
+// ❌ application importa infraestructura / librería
+import { Pool } from 'pg';
+
+// ❌ regla de negocio en el controlador
+if (accident.status === 'CERRADO') reply.code(409); // va en el dominio
+```

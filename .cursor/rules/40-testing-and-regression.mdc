@@ -1,0 +1,17 @@
+---
+description: Política de pruebas, TDD para bugs y evidencia
+alwaysApply: true
+---
+
+# Pruebas y regresión
+
+- Dominio: unit en `apps/api/test/unit/domain`, sin BD/HTTP/mocks de librerías.
+- Aplicación: unit con fakes en memoria de los ports (`apps/api/test/unit/application`).
+- HTTP + persistencia: integración con `fastify.inject` y BD `accidentes_test` (`npm run db:migrate:test`).
+- Web: pruebas de componentes/validación de formularios.
+- Bug ⇒ TDD: 1) prueba de regresión que falla (guarda la salida), 2) fix en la capa de la causa raíz, 3) prueba en verde. Nada de parches que oculten el síntoma.
+- Cada prueba nombra el comportamiento (`returns 404 when accident belongs to another user`).
+- Nunca borres, saltes (`.skip`) ni debilites una prueba para que pase.
+- Seguridad mínima a cubrir: sin auth ⇒ 401; id ajeno ⇒ 404; payload inválido ⇒ 400; rol no admin ⇒ 403 en admin.
+- Actualiza la matriz `docs/testing/README.md` (estado + archivo) al agregar pruebas obligatorias.
+- Reporta comandos y salida real; jamás declares una prueba aprobada sin ejecutarla.

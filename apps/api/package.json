@@ -1,0 +1,39 @@
+{
+  "name": "@accidentes/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API HTTP (Fastify) con arquitectura hexagonal para el registro de accidentes personales.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "typecheck": "tsc -p tsconfig.json",
+    "test:unit": "vitest run test/unit",
+    "test:integration": "vitest run test/integration",
+    "arch:check": "depcruise src --config .dependency-cruiser.cjs",
+    "arch:graph": "node -e \"require('node:fs').mkdirSync('../../docs/architecture', { recursive: true })\" && depcruise src --config .dependency-cruiser.cjs --output-type mermaid --output-to ../../docs/architecture/dependency-graph.mmd",
+    "db:migrate": "tsx src/infrastructure/persistence/postgres/migrate.ts",
+    "db:migrate:test": "tsx src/infrastructure/persistence/postgres/migrate.ts --test"
+  },
+  "dependencies": {
+    "@fastify/helmet": "^13.2.0",
+    "@fastify/static": "^10.1.10",
+    "fastify": "^5.12.8",
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.1",
+    "pino": "^10.4.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/pg": "^8.23.1",
+    "dependency-cruiser": "^18.7.2",
+    "tsx": "^4.23.15",
+    "vitest": "^5.1.0"
+  }
+}

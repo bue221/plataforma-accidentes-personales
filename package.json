@@ -1,0 +1,50 @@
+{
+  "name": "accidentes-personales",
+  "version": "0.1.0",
+  "private": true,
+  "description": "MVP para el registro y seguimiento de accidentes personales (API Fastify hexagonal + SPA React).",
+  "type": "module",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "engines": {
+    "node": ">=22.22.0",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "dev": "concurrently --names api,web --prefix-colors blue,magenta \"npm run dev -w @accidentes/api\" \"npm run dev -w @accidentes/web\"",
+    "build": "npm run build -w @accidentes/web && npm run build -w @accidentes/api",
+    "start": "npm run start -w @accidentes/api",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "npm run test:unit --workspaces",
+    "test:integration": "npm run test:integration -w @accidentes/api",
+    "lint": "eslint .",
+    "typecheck": "npm run typecheck --workspaces",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "arch:check": "npm run arch:check -w @accidentes/api",
+    "arch:graph": "npm run arch:graph -w @accidentes/api",
+    "db:up": "docker compose up -d --wait db",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run db:migrate -w @accidentes/api",
+    "db:migrate:test": "npm run db:migrate:test -w @accidentes/api",
+    "prepare": "node .husky/install.mjs"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@eslint/js": "^10.0.1",
+    "concurrently": "^10.0.7",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.10.1",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.2"
+  }
+}

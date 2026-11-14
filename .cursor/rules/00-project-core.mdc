@@ -1,0 +1,17 @@
+---
+description: Núcleo del proyecto - propósito, fuente de verdad, comandos y forma de trabajar
+alwaysApply: true
+---
+
+# Núcleo del proyecto
+
+- Fuente de verdad: `AGENTS.md`. Insumos confidenciales en `docs/_private/` prevalecen; registra contradicciones en `docs/decisions/decision-log.md`.
+- MVP de accidentes personales: monorepo npm (`apps/api` Fastify hexagonal, `apps/web` Vite React TS), PostgreSQL.
+- Identificadores de código en inglés; prosa de docs en español.
+- Usa solo los scripts contrato: `dev`, `build`, `start`, `test`, `test:unit`, `test:integration`, `lint`, `typecheck`, `format`, `arch:check`, `arch:graph`, `db:up`, `db:migrate`, `db:migrate:test`.
+- Antes de decir "terminado": `npm run lint && npm run typecheck && npm run arch:check && npm test` y reporta la salida real.
+- Nunca afirmes que algo pasó sin ejecutarlo. Si no puedes verificar, dilo.
+- Ante ambigüedad en requisitos: pregunta o documenta el supuesto en el decision log; no inventes.
+- Cambios pequeños y enfocados en la historia actual (YAGNI); no refactorices fuera de alcance.
+- Confidencialidad: no copies el enunciado ni nombres a la firma reclutadora ni a la organización contratante.
+- Registra toda corrección a la salida de un agente en `docs/decisions/agent-corrections.md`.

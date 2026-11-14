@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-accidentes_app}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?defina DB_PASSWORD en su entorno}
+      POSTGRES_DB: accidentes
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Solo se ejecuta al inicializar un volumen vacío: crea la base accidentes_test.
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U "$${POSTGRES_USER}" -d accidentes']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:

@@ -1,0 +1,17 @@
+---
+description: Reglas de negocio del dominio de accidentes personales
+alwaysApply: true
+---
+
+# Reglas de negocio: accidentes
+
+- Registrar un accidente requiere sesión; el dueño es la identidad del token, nunca datos del cliente.
+- Supuesto: el afectado es el titular de la cuenta; el formulario se precarga desde el perfil (ver decision log).
+- Campos: identificación y contacto del afectado, tipo, fecha (no futura), lugar, descripción. Obligatorios validados en frontend y backend.
+- Estados: `REGISTRADO` (inicial) → `EN_REVISION` → `CERRADO` (terminal). Cualquier otra transición es error de dominio.
+- La transición la valida el dominio (p. ej. `accident.changeStatus(next)`), no el controlador ni la BD sola.
+- Solo `ADMIN` cambia estados (tablero admin agrupado por usuario, botones). El rol nunca lo asigna el cliente; el admin se crea por seed desde env vars.
+- El usuario lista solo sus accidentes (fecha + estado), ve el detalle y un mensaje cuando no tiene ninguno.
+- Accidente ajeno o inexistente ⇒ 404.
+- Toda regla nueva: primero prueba unitaria de dominio sin infraestructura.
+- Supuestos nuevos ⇒ `docs/decisions/decision-log.md`.

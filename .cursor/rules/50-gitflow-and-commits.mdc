@@ -1,0 +1,17 @@
+---
+description: GitFlow, nombres de ramas, commits convencionales y PRs
+alwaysApply: true
+---
+
+# GitFlow y commits
+
+- `main` solo vía PR desde `release/x.y.z` o `hotfix/<slug>`. `develop` = integración, solo vía PR.
+- Ramas: `feature/<story-id>-<slug>`, `bugfix/<slug>`, `bugfix/BUG-NN-<slug>` (fase 2), `release/x.y.z`, `hotfix/<slug>`.
+- Nunca: commit en `main`/`develop`, push a `main`/`develop`, `--force`, `git add -f` (los hooks lo bloquean).
+- Commits en inglés: `type(scope): Subject` — `feat|fix|docs|style|refactor|test|chore`; presente, mayúscula inicial, sin punto final.
+  - ✅ `feat(accidents): Add accident registration use case`
+  - ❌ `Added stuff.` / `fix: arreglo login`
+- Un commit = un cambio coherente. Fix de bug: commit `test(...)` con la regresión y luego `fix(...)`.
+- PR hacia `develop` con `.github/pull_request_template.md` completo: historia/AC, evidencia de comandos y salida real.
+- No hagas `git init`, push ni merges sin instrucción explícita del humano.
+- Detalle: `CONTRIBUTING.md`.

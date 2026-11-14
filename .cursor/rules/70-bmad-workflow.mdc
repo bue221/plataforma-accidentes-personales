@@ -1,0 +1,16 @@
+---
+description: Flujo BMAD Method v6.12.4 y supervisión de agentes
+alwaysApply: true
+---
+
+# Flujo BMAD
+
+- Versión instalada: BMAD Method v6.12.4 (estable). No uses v7 alpha ni OpenSpec.
+- Orden de planificación: `bmad-product-brief` → `bmad-prd` (AC verificables Dado/Cuando/Entonces) → `bmad-ux` (ligero) → `bmad-architecture` → `bmad-create-epics-and-stories` → `bmad-sprint-planning` (gate de readiness).
+- Si el gate de readiness falla, no implementes: corrige la planificación.
+- Implementación: un chat nuevo por historia con `bmad-build`, en `feature/<story-id>-<slug>`.
+- Revisión: `bmad-code-review` + subagentes `hexagonal-reviewer`, `security-reviewer`, `test-reviewer`; luego PR y aprobación humana.
+- Cambio de alcance: `bmad-correct-course`. Duda de siguiente paso: `bmad-help`.
+- Artefactos BMAD solo en `_bmad-output/` y solo generados por BMAD; no los falsifiques a mano.
+- Los agentes proponen; checks automáticos verifican; el humano aprueba.
+- Registra correcciones en `docs/decisions/agent-corrections.md` y exporta la sesión saneada a `docs/ai-sessions/`.

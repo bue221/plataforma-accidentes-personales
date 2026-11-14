@@ -1,0 +1,16 @@
+# GitFlow: main y develop solo reciben cambios vía Pull Request desde
+# feature/*, bugfix/*, release/* o hotfix/*.
+branch="$(git symbolic-ref --short HEAD 2>/dev/null || echo detached)"
+
+# El commit raíz (repositorio sin historial) se permite para poder inicializar main.
+if git rev-parse --verify --quiet HEAD >/dev/null; then
+  case "$branch" in
+    main|develop)
+      echo "✖ Commits directos en '$branch' no están permitidos."
+      echo "  Cree una rama de trabajo, p. ej.: git switch -c feature/<descripcion>"
+      exit 1
+      ;;
+  esac
+fi
+
+npx --no -- lint-staged

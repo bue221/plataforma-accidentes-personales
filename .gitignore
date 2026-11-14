@@ -1,0 +1,39 @@
+# Dependencias
+node_modules/
+
+# Artefactos de build y cobertura
+dist/
+build/
+coverage/
+*.tsbuildinfo
+.vite/
+
+# Variables de entorno: nunca se versionan, salvo las plantillas
+.env
+.env.*
+!.env.example
+!**/.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Insumos confidenciales de la organización: jamás se publican
+/Prueba Tecnica.pdf
+/*.pdf
+docs/_private/
+
+# Volcados locales de sesiones de IA fuera de la carpeta curada docs/ai-sessions/
+*.transcript.json
+*.transcript.md
+agent-transcripts/
+/ai-sessions/
+/transcripts/

@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+coverage/
+package-lock.json
+*.pdf
+docs/_private/
+docs/architecture/*.mmd
+_bmad/
+_bmad-output/
